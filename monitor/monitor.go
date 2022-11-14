@@ -4,25 +4,42 @@ import (
 	"fmt"
 	"net"
 	"strconv"
+	"sync"
 	"time"
+
+	utils "github.com/rekram1-node/NetworkMonitor/utilityFunctions"
 )
 
-var sites []string = []string{
-	"health.aws.amazon.com",
-	"status.azure.com",
-	"status.cloud.mongodb.com",
-}
+func ConnectedToInternet() bool {
+	valid := 0
+	sites := utils.RandomSites()
 
-func ConnectedToInternet(hostname string) bool {
-	fmt.Println("Checking Internet Connection...")
-	address := hostname + ":" + strconv.Itoa(443)
-	conn, err := net.DialTimeout("tcp", address, 2*time.Second)
+	var wg = &sync.WaitGroup{}
+	for _, siteName := range sites {
+		wg.Add(1)
 
-	if err != nil {
-		fmt.Printf("Connected: %t\n", false)
-		return false
+		go func(site string) {
+			address := site + ":" + strconv.Itoa(443)
+			conn, err := net.DialTimeout("tcp", address, 2*time.Second)
+
+			if err != nil {
+				fmt.Println("failed to connect to:", site)
+				fmt.Println()
+			} else {
+				valid++
+				defer conn.Close()
+				fmt.Println("Connected To:", site)
+				fmt.Println()
+			}
+
+			wg.Done()
+		}(siteName)
 	}
-	defer conn.Close()
-	fmt.Printf("Connected: %t\n", true)
-	return true
+	wg.Wait()
+
+	if valid > 0 {
+		return true
+	}
+
+	return false
 }

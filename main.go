@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	online := monitor.ConnectedToInternet("google.com")
+	online := monitor.ConnectedToInternet()
 
 	if !online {
 		currentTime := time.Now()
