@@ -1,0 +1,61 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  NAME: 'network-monitor'
+
+tasks:
+  clean:
+    cmds:
+      - go clean
+
+  ci:release: 
+    desc: "releases docker image using go releaser"
+    deps: [ clean ]
+    cmds:
+      - goreleaser release --rm-dist
+  
+  ci:test:
+    desc: "runs unit tests"
+    cmds:
+      - gotestsum --junitfile go-test.xml -- -coverprofile .coverage --covermode atomic -race ./...
+      - gocover-cobertura -ignore-files '_test\.go$' < .coverage >.coverage.xml
+    sources:
+      - ./**/*.go
+
+  build:
+    cmds:
+      - go build -trimpath -ldflags "{{.BUILD_FLAGS}}" -o {{.NAME}}{{exeExt}} {{.CLI_ARGS}}
+    sources:
+      - ./**/*.go
+    generates:
+      - '{{.NAME}}{{exeExt}}'
+    method: checksum
+    env:
+      CGO_ENABLED: 0
+      GOOS: '{{default "" .BUILD_OS}}'
+      GOARCH: '{{default "" .BUILD_ARCH}}'
+    vars:
+      BUILD_FLAGS: '{{default "" .BUILD_FLAGS}}'
+
+  run:
+    deps: [ build ]
+    sources:
+      - ./**/*
+      - ./*
+    cmds:
+      - ./{{.NAME}}{{exeExt}}
+  
+  format:
+    cmds:
+      - gofmt -s -w .
+    sources:
+      - ./**/*.go
+
+  lint:
+    cmds:
+      - cmd: golangci-lint run -v -c ./.golangci.yml
+        ignore_error: true
+    sources:
+      - ./**/*.go

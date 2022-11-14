@@ -570,7 +570,6 @@ wayfair.com
 coursera.org
 redirectvoluum.com
 tutorialspoint.com
-panda.tv
 lenta.ru
 weblio.jp
 xda-developers.com
@@ -739,7 +738,6 @@ elfagr.org
 howtogeek.com
 aastocks.com
 manoramaonline.com
-alwafd.org
 inquirer.net
 himado.in
 xbox.com
@@ -998,3 +996,4 @@ cocolog-nifty.com
 ptt.cc
 legacy.com
 mynet.com
+

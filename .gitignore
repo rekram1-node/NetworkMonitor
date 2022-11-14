@@ -1,0 +1,5 @@
+# task artifacts
+.task
+
+# environment config
+.env
