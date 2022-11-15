@@ -1,3 +1,3 @@
 FROM scratch
-COPY 443id-cli /
+COPY network-monitor /
 ENTRYPOINT ["/network-monitor"]
