@@ -393,7 +393,6 @@ nyaa.se
 enet.com.cn
 medium.com
 google.az
-akamaihd.net
 dmm.com
 billdesk.com
 wsj.com
