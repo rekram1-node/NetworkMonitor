@@ -99,6 +99,6 @@ changelog:
       - "^docs:"
       - "^test:"
 
-github:
-    owner: rekram1-node
-    name: NetworkMonitor
+# github:
+#     owner: rekram1-node
+#     name: NetworkMonitor
