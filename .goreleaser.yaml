@@ -51,7 +51,7 @@ dockers:
       - "rekram/network-monitor:latest-amd64"
       - "rekram/network-monitor:v{{ .Major }}-amd64"
       - "rekram/network-monitor:v{{ .Major }}.{{ .Minor }}-amd64"
-    dockerfile: Dockerfile.goreleaser
+    dockerfile: Dockerfile
     use: docker
     build_flag_templates:
       - "--platform=linux/amd64"
