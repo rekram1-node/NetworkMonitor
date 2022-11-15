@@ -19,8 +19,7 @@ tasks:
   ci:test:
     desc: "runs unit tests"
     cmds:
-      - gotestsum --junitfile go-test.xml -- -coverprofile .coverage --covermode atomic -race ./...
-      - gocover-cobertura -ignore-files '_test\.go$' < .coverage >.coverage.xml
+      - go test -v
     sources:
       - ./**/*.go
 
