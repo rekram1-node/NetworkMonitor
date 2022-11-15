@@ -996,4 +996,7 @@ cocolog-nifty.com
 ptt.cc
 legacy.com
 mynet.com
-
+jpmorgan.com
+tesla.com
+spacex.com
+meta.com

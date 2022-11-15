@@ -24,14 +24,11 @@ func ConnectedToInternet() bool {
 
 			if err != nil {
 				fmt.Println("failed to connect to:", site)
-				fmt.Println()
 			} else {
 				valid++
 				defer conn.Close()
 				fmt.Println("Connected To:", site)
-				fmt.Println()
 			}
-
 			wg.Done()
 		}(siteName)
 	}
