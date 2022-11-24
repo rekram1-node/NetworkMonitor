@@ -40,10 +40,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
       
       - name: Publish to all 
-        runs-on: ubuntu-latest
         run: |
           docker images
-          echo ${{ secrets.GH_PAT }} | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
+          echo ${{ secrets.GH_PAT }} | docker login rekram/network-monitor --username rekram --password-stdin
 
 
       
