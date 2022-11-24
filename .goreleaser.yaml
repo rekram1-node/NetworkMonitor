@@ -1,4 +1,4 @@
-project_name: NetworkMonitor
+project_name: networkmonitor
 
 env:
   - GO111MODULE=on
@@ -19,9 +19,9 @@ gomod:
     - GOPRIVATE=gitlab.private.com
 
 builds:
-  - id: NetworkMonitor
+  - id: networkmonitor
     main: .
-    binary: NetworkMonitor
+    binary: networkmonitor
     env:
       - CGO_ENABLED=0
     targets:
