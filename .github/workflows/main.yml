@@ -46,14 +46,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           DOCKER_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }} 
-      
-    
-    
-    # docker push rekram/network-monitor
-
-
-      
-      # - name: Log in to the Container registry
-        
-      #   echo ${{ secrets.GH_PAT }} | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
-
