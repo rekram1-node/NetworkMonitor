@@ -1,5 +1,10 @@
 name: CI/CD
+
 on: [push, pull_request]
+# on:
+#   push:
+#     branches:
+#       - main
 
 jobs:
   goreleaser:
@@ -27,9 +32,22 @@ jobs:
           password: ${{ secrets.GH_PAT }}
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v3
+        uses: goreleaser/goreleaser-action@v2
         with:
           version: latest
           args: release --rm-dist
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+      
+      - name: Publish to all 
+        run: |
+          docker images
+          echo ${{ secrets.DOCKER_ACCESS_TOKEN }} | docker login --username rekram --password-stdin
+          docker push rekram/network-monitor
+
+
+      
+      # - name: Log in to the Container registry
+        
+      #   echo ${{ secrets.GH_PAT }} | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
+
