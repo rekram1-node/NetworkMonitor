@@ -18,8 +18,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          version-type:  'minor
-
+          version-type:  'minor'
+          
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v3
         with:
