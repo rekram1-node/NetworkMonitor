@@ -1,0 +1,100 @@
+project_name: network-monitor
+
+env:
+  - GO111MODULE=on
+  - CGO_ENABLED=0
+
+before:
+  hooks:
+    - go mod tidy
+    - go mod download
+    - go generate ./...
+
+snapshot:
+  name_template: "{{ .Tag }}"
+
+gomod:
+  proxy: true
+  env:
+    - GOPRIVATE=gitlab.private.com
+
+builds:
+  - id: network-monitor
+    main: .
+    binary: network-monitor
+    env:
+      - CGO_ENABLED=0
+    targets:
+      - darwin_amd64
+      - darwin_arm64
+      - linux_arm_5
+      - linux_arm_7
+      - linux_amd64
+      - linux_arm64
+      - windows_386
+      - windows_amd64
+
+dockers:
+  -
+      image_templates:
+        - "ghcr.io/rekram1-node/NetworkMonitor:latest-arm64v8"
+        - "ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}-arm64v8"
+        - "ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}.{{ .Minor }}-arm64v8"
+      goos: linux
+      goarch: arm64
+      dockerfile: Dockerfile
+      use: buildx
+      build_flag_templates:
+        - "--platform=linux/arm64/v8"
+  -
+    image_templates:
+      - "ghcr.io/rekram1-node/NetworkMonitor:latest-amd64"
+      - "ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}-amd64"
+      - "ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}.{{ .Minor }}-amd64"
+    dockerfile: Dockerfile
+    use: buildx
+    build_flag_templates:
+      - "--platform=linux/amd64"
+
+docker_manifests:
+  - name_template:  ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}
+    image_templates:
+    - ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}-amd64
+    - ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}-arm64v8
+  - name_template:  ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}.{{ .Minor }}
+    image_templates:
+    - ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}.{{ .Minor }}-amd64
+    - ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}.{{ .Minor }}-arm64v8
+  - name_template:  ghcr.io/rekram1-node/NetworkMonitor:latest
+    image_templates:
+    - ghcr.io/rekram1-node/NetworkMonitor:latest-amd64
+    - ghcr.io/rekram1-node/NetworkMonitor:latest-arm64v8
+
+archives:
+  - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    replacements:
+      darwin: MacOS
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - README.md
+      - LICENSE
+    allow_different_binary_count: true
+
+universal_binaries:
+  - replace: false
+
+checksum:
+  name_template: 'checksums.txt'
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
