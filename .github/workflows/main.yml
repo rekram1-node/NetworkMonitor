@@ -19,8 +19,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
 
-      - name: Login to Dockerhub
-        run: echo ${{ secrets.DOCKER_ACCESS_KEY }} | docker login -u rekram --password-stdin
+      # - name: Login to Dockerhub
+      #   run: echo ${{ secrets.DOCKER_ACCESS_KEY }} | docker login -u rekram --password-stdin
+      - name: Docker Login
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GH_PAT }}
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v3
