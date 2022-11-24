@@ -1,0 +1,8 @@
+# task artifacts
+.task
+
+# environment config
+.env
+
+# goreleaser artifacts
+dist
