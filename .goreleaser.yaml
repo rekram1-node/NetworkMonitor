@@ -88,7 +88,3 @@ archives:
 
 universal_binaries:
   - replace: false
-
-release:
-  extra_files:
-      - glob: ./sites.txt
