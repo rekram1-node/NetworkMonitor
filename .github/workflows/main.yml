@@ -20,9 +20,7 @@ jobs:
           WITH_V: true
 
       - name: Login to Dockerhub
-        run:
-          - |-
-            echo ${{ secrets.DOCKER_ACCESS_KEY }} | docker login -u rekram --password-stdin
+        run: echo ${{ secrets.DOCKER_ACCESS_KEY }} | docker login -u rekram --password-stdin
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v3
