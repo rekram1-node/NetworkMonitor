@@ -27,9 +27,9 @@ jobs:
       - name: Docker Login
         uses: docker/login-action@v1
         with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GH_PAT }}
+          registry: docker.io
+          username: rekram
+          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
