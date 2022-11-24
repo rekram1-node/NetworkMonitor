@@ -7,15 +7,12 @@ import (
 )
 
 func GetSpeed() {
-	noUpload := false
-
-	// Prints the output right away:
-	// fast.Run(noUpload)
+	noUpload := true
 	res, err := fast.Measure(noUpload)
 
 	if err != nil {
 		fmt.Println("failed to measure speed:", err)
 	}
 
-	fmt.Println(res.Down)
+	fmt.Println("Download Speed:", res.Down)
 }
