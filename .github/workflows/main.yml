@@ -32,6 +32,11 @@ jobs:
           registry: docker.io
           username: rekram
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+      
+      - name: Publish to all 
+        run: |
+          docker images
+          echo ${{ secrets.DOCKER_ACCESS_TOKEN }} | docker login --username rekram --password-stdin
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
@@ -42,11 +47,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           DOCKER_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }} 
       
-      - name: Publish to all 
-        run: |
-          docker images
-          echo ${{ secrets.DOCKER_ACCESS_TOKEN }} | docker login --username rekram --password-stdin
-          docker push rekram/network-monitor
+    
+    
+    # docker push rekram/network-monitor
 
 
       
