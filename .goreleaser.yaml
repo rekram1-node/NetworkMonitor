@@ -83,6 +83,7 @@ archives:
     files:
       - README.md
       - LICENSE
+      - '*.txt'
     allow_different_binary_count: true
 
 universal_binaries:
