@@ -1,0 +1,39 @@
+linters:
+  enable:
+  - bidichk
+  - dogsled
+  - errorlint
+  - exhaustive
+  - forbidigo
+  - gocritic
+  - gocyclo
+  - gofmt
+  - goimports
+  - gomoddirectives
+  - gosec
+  - ifshort
+  - ireturn
+  - makezero
+  - misspell
+  - nakedret
+  - nilnil
+  - nolintlint
+  - promlinter
+  - predeclared
+  - stylecheck
+  - tagliatelle
+  - testpackage
+  - thelper
+  - tenv
+  - unused
+  - whitespace
+  disable:
+  - deadcode
+  - errcheck
+  - godot
+  fast: false
+
+run:
+    concurrency: 4
+    timeout: 5m
+    modules-download-mode: readonly
