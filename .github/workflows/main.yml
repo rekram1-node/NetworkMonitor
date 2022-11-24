@@ -13,13 +13,12 @@ jobs:
         with:
           go-version: 1.19.x
       
-      - name:  'Automated Version Bump'
-        uses:  'phips28/gh-action-bump-version@master'
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          version-type:  'minor'
-          
+          WITH_V: true
+
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v3
         with:
