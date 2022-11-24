@@ -1,4 +1,4 @@
-project_name: network-monitor
+project_name: networkmonitor
 
 env:
   - GO111MODULE=on
@@ -19,9 +19,9 @@ gomod:
     - GOPRIVATE=gitlab.private.com
 
 builds:
-  - id: network-monitor
+  - id: networkmonitor
     main: .
-    binary: network-monitor
+    binary: networkmonitor
     env:
       - CGO_ENABLED=0
     targets:
@@ -33,13 +33,12 @@ builds:
       - linux_arm64
       - windows_386
       - windows_amd64
-
 dockers:
   -
       image_templates:
-        - "ghcr.io/rekram1-node/{{ .ProjectName }}:latest-arm64v8"
-        - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-arm64v8"
-        - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-arm64v8"
+        - "docker.io/rekram/network-monitor:latest-arm64v8"
+        - "docker.io/rekram/network-monitor:v{{ .Major }}-arm64v8"
+        - "docker.io/rekram/network-monitor:v{{ .Major }}.{{ .Minor }}-arm64v8"
       goos: linux
       goarch: arm64
       dockerfile: Dockerfile
@@ -48,27 +47,27 @@ dockers:
         - "--platform=linux/arm64/v8"
   -
     image_templates:
-      - "ghcr.io/rekram1-node/{{ .ProjectName }}:latest-amd64"
-      - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-amd64"
-      - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-amd64"
+      - "docker.io/rekram/network-monitor:latest-amd64"
+      - "docker.io/rekram/network-monitor:v{{ .Major }}-amd64"
+      - "docker.io/rekram/network-monitor:v{{ .Major }}.{{ .Minor }}-amd64"
     dockerfile: Dockerfile
     use: buildx
     build_flag_templates:
       - "--platform=linux/amd64"
 
 docker_manifests:
-  - name_template:  ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}
+  - name_template:  docker.io/rekram/network-monitor:v{{ .Major }}
     image_templates:
-    - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-amd64
-    - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-arm64v8
-  - name_template:  ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}
+    - docker.io/rekram/network-monitor:v{{ .Major }}-amd64
+    - docker.io/rekram/network-monitor:v{{ .Major }}-arm64v8
+  - name_template:  docker.io/rekram/network-monitor:v{{ .Major }}.{{ .Minor }}
     image_templates:
-    - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-amd64
-    - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-arm64v8
-  - name_template:  ghcr.io/rekram1-node/{{ .ProjectName }}:latest
+    - docker.io/rekram/network-monitor:v{{ .Major }}.{{ .Minor }}-amd64
+    - docker.io/rekram/network-monitor:v{{ .Major }}.{{ .Minor }}-arm64v8
+  - name_template: docker.io/rekram/network-monitor:latest
     image_templates:
-    - ghcr.io/rekram1-node/{{ .ProjectName }}:latest-amd64
-    - ghcr.io/rekram1-node/{{ .ProjectName }}:latest-arm64v8
+    - docker.io/rekram/network-monitor:latest-amd64
+    - docker.io/rekram/network-monitor:latest-arm64v8
 
 archives:
   - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
@@ -84,17 +83,8 @@ archives:
     files:
       - README.md
       - LICENSE
+      - '*.txt'
     allow_different_binary_count: true
 
 universal_binaries:
   - replace: false
-
-checksum:
-  name_template: 'checksums.txt'
-
-changelog:
-  sort: asc
-  filters:
-    exclude:
-      - "^docs:"
-      - "^test:"
