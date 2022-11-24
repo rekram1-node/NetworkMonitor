@@ -1,3 +1,3 @@
 FROM scratch
-COPY network-monitor /
-ENTRYPOINT ["/network-monitor"]
+COPY networkmonitor /
+ENTRYPOINT ["/networkmonitor"]
