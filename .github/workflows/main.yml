@@ -1,5 +1,10 @@
 name: CI/CD
+
 on: [push, pull_request]
+# on:
+#   push:
+#     branches:
+#       - main
 
 jobs:
   goreleaser:
@@ -33,3 +38,8 @@ jobs:
           args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+      
+      # - name: Log in to the Container registry
+        
+      #   echo ${{ secrets.GH_PAT }} | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
+
