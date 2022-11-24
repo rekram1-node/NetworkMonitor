@@ -37,9 +37,9 @@ builds:
 dockers:
   -
       image_templates:
-        - "ghcr.io/rekram1-node/NetworkMonitor:latest-arm64v8"
-        - "ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}-arm64v8"
-        - "ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}.{{ .Minor }}-arm64v8"
+        - "ghcr.io/rekram1-node/{{ .ProjectName }}:latest-arm64v8"
+        - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-arm64v8"
+        - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-arm64v8"
       goos: linux
       goarch: arm64
       dockerfile: Dockerfile
@@ -48,27 +48,27 @@ dockers:
         - "--platform=linux/arm64/v8"
   -
     image_templates:
-      - "ghcr.io/rekram1-node/NetworkMonitor:latest-amd64"
-      - "ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}-amd64"
-      - "ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}.{{ .Minor }}-amd64"
+      - "ghcr.io/rekram1-node/{{ .ProjectName }}:latest-amd64"
+      - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-amd64"
+      - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-amd64"
     dockerfile: Dockerfile
     use: buildx
     build_flag_templates:
       - "--platform=linux/amd64"
 
 docker_manifests:
-  - name_template:  ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}
+  - name_template:  ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}
     image_templates:
-    - ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}-amd64
-    - ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}-arm64v8
-  - name_template:  ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}.{{ .Minor }}
+    - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-amd64
+    - ghcr.io/rekram1-node/Networ{{ .ProjectName }}kMonitor:v{{ .Major }}-arm64v8
+  - name_template:  ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}
     image_templates:
-    - ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}.{{ .Minor }}-amd64
-    - ghcr.io/rekram1-node/NetworkMonitor:v{{ .Major }}.{{ .Minor }}-arm64v8
-  - name_template:  ghcr.io/rekram1-node/NetworkMonitor:latest
+    - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-amd64
+    - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-arm64v8
+  - name_template:  ghcr.io/rekram1-node/{{ .ProjectName }}:latest
     image_templates:
-    - ghcr.io/rekram1-node/NetworkMonitor:latest-amd64
-    - ghcr.io/rekram1-node/NetworkMonitor:latest-arm64v8
+    - ghcr.io/rekram1-node/{{ .ProjectName }}:latest-amd64
+    - ghcr.io/rekram1-node/{{ .ProjectName }}:latest-arm64v8
 
 archives:
   - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
