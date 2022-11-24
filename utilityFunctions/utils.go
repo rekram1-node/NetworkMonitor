@@ -33,7 +33,7 @@ func contains(slice []int, numberToCheck int) bool {
 }
 
 func RandomSites() []string {
-	siteArray, err := readLines("utilityFunctions/sites.txt")
+	siteArray, err := readLines("sites.txt")
 
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
