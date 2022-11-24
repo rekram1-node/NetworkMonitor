@@ -43,6 +43,7 @@ jobs:
         run: |
           docker images
           echo ${{ secrets.DOCKER_ACCESS_TOKEN }} | docker login --username rekram --password-stdin
+          docker push rekram/network-monitor
 
 
       
