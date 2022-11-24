@@ -33,13 +33,12 @@ builds:
       - linux_arm64
       - windows_386
       - windows_amd64
-
 dockers:
   -
       image_templates:
-        - "ghcr.io/rekram1-node/{{ .ProjectName }}:latest-arm64v8"
-        - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-arm64v8"
-        - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-arm64v8"
+        - "rekram/network-monitor:latest-arm64v8"
+        - "rekram/network-monitor:v{{ .Major }}-arm64v8"
+        - "rekram/network-monitor:v{{ .Major }}.{{ .Minor }}-arm64v8"
       goos: linux
       goarch: arm64
       dockerfile: Dockerfile
@@ -48,27 +47,62 @@ dockers:
         - "--platform=linux/arm64/v8"
   -
     image_templates:
-      - "ghcr.io/rekram1-node/{{ .ProjectName }}:latest-amd64"
-      - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-amd64"
-      - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-amd64"
+      - "rekram/network-monitor:latest-amd64"
+      - "rekram/network-monitor:v{{ .Major }}-amd64"
+      - "rekram/network-monitor:v{{ .Major }}.{{ .Minor }}-amd64"
     dockerfile: Dockerfile
     use: buildx
     build_flag_templates:
       - "--platform=linux/amd64"
 
 docker_manifests:
-  - name_template:  ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}
+  - name_template:  rekram/network-monitor:v{{ .Major }}
     image_templates:
-    - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-amd64
-    - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-arm64v8
-  - name_template:  ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}
+    - rekram/network-monitor:v{{ .Major }}-amd64
+    - rekram/network-monitor:v{{ .Major }}-arm64v8
+  - name_template:  rekrama/network-monitor:v{{ .Major }}.{{ .Minor }}
     image_templates:
-    - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-amd64
-    - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-arm64v8
-  - name_template:  ghcr.io/rekram1-node/{{ .ProjectName }}:latest
+    - rekram/network-monitor:v{{ .Major }}.{{ .Minor }}-amd64
+    - rekram/network-monitor:v{{ .Major }}.{{ .Minor }}-arm64v8
+  - name_template: rekram/network-monitor:latest
     image_templates:
-    - ghcr.io/rekram1-node/{{ .ProjectName }}:latest-amd64
-    - ghcr.io/rekram1-node/{{ .ProjectName }}:latest-arm64v8
+    - rekram/network-monitor:latest-amd64
+    - rekram/network-monitor:latest-arm64v8
+# dockers:
+#   -
+#       image_templates:
+#         - "ghcr.io/rekram1-node/{{ .ProjectName }}:latest-arm64v8"
+#         - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-arm64v8"
+#         - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-arm64v8"
+#       goos: linux
+#       goarch: arm64
+#       dockerfile: Dockerfile
+#       use: buildx
+#       build_flag_templates:
+#         - "--platform=linux/arm64/v8"
+#   -
+#     image_templates:
+#       - "ghcr.io/rekram1-node/{{ .ProjectName }}:latest-amd64"
+#       - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-amd64"
+#       - "ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-amd64"
+#     dockerfile: Dockerfile
+#     use: buildx
+#     build_flag_templates:
+#       - "--platform=linux/amd64"
+
+# docker_manifests:
+#   - name_template:  ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}
+#     image_templates:
+#     - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-amd64
+#     - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-arm64v8
+#   - name_template:  ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}
+#     image_templates:
+#     - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-amd64
+#     - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-arm64v8
+#   - name_template:  ghcr.io/rekram1-node/{{ .ProjectName }}:latest
+#     image_templates:
+#     - ghcr.io/rekram1-node/{{ .ProjectName }}:latest-amd64
+#     - ghcr.io/rekram1-node/{{ .ProjectName }}:latest-arm64v8
 
 archives:
   - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
