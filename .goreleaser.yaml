@@ -60,7 +60,7 @@ docker_manifests:
   - name_template:  ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}
     image_templates:
     - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-amd64
-    - ghcr.io/rekram1-node/Networ{{ .ProjectName }}kMonitor:v{{ .Major }}-arm64v8
+    - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}-arm64v8
   - name_template:  ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}
     image_templates:
     - ghcr.io/rekram1-node/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}-amd64
