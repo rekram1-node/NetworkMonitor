@@ -98,7 +98,6 @@ popads.net
 youth.cn
 twitch.tv
 wikia.com
-microsoftonline.com
 quora.com
 chase.com
 adobe.com
@@ -420,7 +419,6 @@ answers.com
 google.sk
 kissanime.to
 marca.com
-k618.cn
 ebay.in
 ask.fm
 wetransfer.com
@@ -971,7 +969,6 @@ icolor.com.cn
 babycenter.com
 qvc.com
 indiamart.com
-onlinecreditcenter6.com
 6pm.com
 g2a.com
 milanuncios.com
