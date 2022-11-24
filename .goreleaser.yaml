@@ -60,11 +60,11 @@ docker_manifests:
     image_templates:
     - docker.io/rekram/network-monitor:v{{ .Major }}-amd64
     - docker.io/rekram/network-monitor:v{{ .Major }}-arm64v8
-  - name_template:  rekram/network-monitor:v{{ .Major }}.{{ .Minor }}
+  - name_template:  docker.io/rekram/network-monitor:v{{ .Major }}.{{ .Minor }}
     image_templates:
     - docker.io/rekram/network-monitor:v{{ .Major }}.{{ .Minor }}-amd64
     - docker.io/rekram/network-monitor:v{{ .Major }}.{{ .Minor }}-arm64v8
-  - name_template: rekram/network-monitor:latest
+  - name_template: docker.io/rekram/network-monitor:latest
     image_templates:
     - docker.io/rekram/network-monitor:latest-amd64
     - docker.io/rekram/network-monitor:latest-arm64v8
