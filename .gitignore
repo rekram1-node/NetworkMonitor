@@ -1,0 +1,11 @@
+# task artifacts
+.task
+
+# environment config
+.env
+
+# goreleaser artifacts
+dist
+
+# vscode artifacts
+.vscode
