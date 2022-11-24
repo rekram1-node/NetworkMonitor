@@ -42,7 +42,7 @@ jobs:
       - name: Publish to all 
         run: |
           docker images
-          echo ${{ secrets.GH_PAT }} | docker login rekram/network-monitor --username rekram --password-stdin
+          echo ${{ secrets.DOCKER_ACCESS_TOKEN }} | docker login --username rekram --password-stdin
 
 
       
