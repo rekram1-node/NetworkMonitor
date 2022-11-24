@@ -6,3 +6,6 @@
 
 # goreleaser artifacts
 dist
+
+# vscode artifacts
+.vscode
