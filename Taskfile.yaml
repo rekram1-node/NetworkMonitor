@@ -3,7 +3,7 @@
 version: '3'
 
 vars:
-  NAME: 'network-monitor'
+  NAME: 'network-monitor.binary'
 
 tasks:
   clean:
