@@ -2,9 +2,9 @@ module github.com/rekram1-node/NetworkMonitor
 
 go 1.19
 
+require github.com/adhocore/fast v1.3.0
+
 require (
-	github.com/adhocore/chin v1.1.0 // indirect
-	github.com/adhocore/fast v1.3.0 // indirect
 	github.com/chromedp/cdproto v0.0.0-20221121013437-8e96627807c6 // indirect
 	github.com/chromedp/chromedp v0.8.6 // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
