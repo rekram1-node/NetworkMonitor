@@ -1,7 +1,6 @@
 package monitor
 
 import (
-	"fmt"
 	"net"
 	"strconv"
 	"sync"
@@ -22,12 +21,9 @@ func ConnectedToInternet() bool {
 			address := site + ":" + strconv.Itoa(443)
 			conn, err := net.DialTimeout("tcp", address, 2*time.Second)
 
-			if err != nil {
-				fmt.Println("failed to connect to:", site)
-			} else {
+			if err == nil {
 				valid++
 				defer conn.Close()
-				fmt.Println("Connected To:", site)
 			}
 			wg.Done()
 		}(siteName)

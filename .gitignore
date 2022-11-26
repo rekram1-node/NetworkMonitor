@@ -12,3 +12,6 @@ dist
 
 # binary
 network-monitor.binary
+
+# misc
+*.csv
