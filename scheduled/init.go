@@ -4,9 +4,15 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/mail"
 	"os"
 
+	"github.com/rekram1-node/NetworkMonitor/monitor"
 	"gopkg.in/yaml.v2"
+)
+
+const (
+	ConfigFileName = "config.yaml"
 )
 
 type autoUpdate struct {
@@ -14,23 +20,34 @@ type autoUpdate struct {
 	Interval int
 }
 
-type secrets struct {
-	ApiKey        string
+type Config struct {
+	UpdateConfig autoUpdate
+	// Email         string
+	// Password      string
 	PublishScript string
 }
 
-type Config struct {
-	UpdateConfig autoUpdate
-	Secrets      secrets
+func validMailAddress(address string) bool {
+	_, err := mail.ParseAddress(address)
+	if err != nil {
+		return false
+	}
+	return true
 }
 
 func Initialize(dir string) {
+	if exists, _ := monitor.Exists(dir); exists {
+		log.Fatal("app has already been initialized")
+		return
+	}
+
 	err := os.MkdirAll(dir, os.ModePerm)
+
 	if err != nil {
 		log.Fatal("failed to create directory: network-monitoring")
 	}
 
-	filePath := dir + "/config.yaml"
+	filePath := dir + "/" + ConfigFileName
 
 	f, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 
@@ -40,19 +57,31 @@ func Initialize(dir string) {
 		log.Fatal("failed to create configuration file at " + filePath)
 	}
 
+	// var userEmail string = ""
+	// var userPassword string = ""
+
+	// fmt.Println("Please enter an email for alert purposes: ")
+	// fmt.Scanln(&userEmail)
+
+	// for !validMailAddress(userEmail) {
+	// 	fmt.Println("That email was invalid, please enter a valid email address: ")
+	// 	fmt.Scanln(&userEmail)
+	// }
+
+	// fmt.Println("Please enter the password for your email address: ")
+	// fmt.Scanln(&userPassword)
+
 	autoUpdate := autoUpdate{
 		Status:   true,
 		Interval: 5,
 	}
 
-	s := secrets{
-		ApiKey: "fakeApiKey",
-	}
-
 	cfg := map[string]Config{
 		"network-monitor": {
 			autoUpdate,
-			s,
+			// userEmail,
+			// userPassword,
+			"",
 		},
 	}
 

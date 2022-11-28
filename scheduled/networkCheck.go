@@ -37,29 +37,3 @@ func ConnectionCheck(dir string, timeLayout string) {
 		}
 	}
 }
-
-func UploadFile(dir string) error {
-	// f := dir + "/" + monitor.OutagesFileName
-	// outagesFile, err := os.Open(f)
-
-	// if err != nil {
-	// 	return err
-	// }
-	// configurationFile := dir + "/config.yaml"
-
-	// err := clearFile(outagesFile)
-
-	// if err != nil {
-	// 	return err
-	// }
-
-	return nil
-}
-
-// func clearFile(filePath string) error {
-// 	err := os.Remove(filePath)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	return nil
-// }

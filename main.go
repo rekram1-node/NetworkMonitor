@@ -2,6 +2,8 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"log"
 	"os"
 
 	"github.com/rekram1-node/NetworkMonitor/scheduled"
@@ -16,18 +18,27 @@ func main() {
 	dir := home + "/network-monitoring"
 
 	init := flag.Bool("init", false, "initialize scripts")
+	uploadData := flag.Bool("upload", false, "upload file")
+
 	flag.Parse()
 
 	if *init {
+		fmt.Println("initializing application...")
 		scheduled.Initialize(dir)
 	}
 
-	uploadData := flag.Bool("upload", false, "upload file")
-	flag.Parse()
-
 	if *uploadData {
-		scheduled.UploadFile(dir)
+		fmt.Println("uploading...")
+		err := scheduled.UploadFile(dir)
+		checkErr(err)
 	} else {
+		fmt.Println("checking connection...")
 		scheduled.ConnectionCheck(dir, timeLayout)
+	}
+}
+
+func checkErr(err error) {
+	if err != nil {
+		log.Fatal(err)
 	}
 }

@@ -18,7 +18,7 @@ type LogConfig struct {
 	Directory      string
 }
 
-func exists(name string) (bool, error) {
+func Exists(name string) (bool, error) {
 	_, err := os.Stat(name)
 	if err == nil {
 		return true, nil
@@ -33,7 +33,7 @@ func AppendLog(cfg *LogConfig) error {
 	writeHeader := false
 	filePath := cfg.Directory + "/" + OutagesFileName
 
-	if ok, _ := exists(filePath); !ok {
+	if ok, _ := Exists(filePath); !ok {
 		writeHeader = true
 	}
 
