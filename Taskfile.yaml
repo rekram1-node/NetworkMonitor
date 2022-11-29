@@ -44,7 +44,7 @@ tasks:
       - ./**/*
       - ./*
     cmds:
-      - ./{{.NAME}}{{exeExt}}
+      - ./{{.NAME}}{{exeExt}} {{.CLI_ARGS}}
   
   format:
     cmds:

@@ -1,11 +1,13 @@
 package scheduled
 
 import (
+	"bufio"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/mail"
 	"os"
+	"strings"
 
 	"github.com/rekram1-node/NetworkMonitor/monitor"
 	"gopkg.in/yaml.v2"
@@ -21,7 +23,8 @@ type autoUpdate struct {
 }
 
 type Config struct {
-	UpdateConfig autoUpdate
+	UpdateConfig  autoUpdate
+	ScanFrequency string
 	// Email         string
 	// Password      string
 	PublishScript string
@@ -35,9 +38,34 @@ func validMailAddress(address string) bool {
 	return true
 }
 
+func prompt(message string) string {
+	fmt.Println(message)
+	response, _ := bufio.NewReader(os.Stdin).ReadString('\n')
+	response = strings.ToLower(response)
+	response = strings.TrimSpace(response)
+	return response
+}
+
+func handleExistence() bool {
+	var defaultMsg string = "You have already initialized network-monitor do you want to overwrite your current settings? (y/n)"
+	var response string = prompt(defaultMsg)
+
+	for response != "y" && response != "n" {
+		response = prompt(defaultMsg + "\nPlease enter a valid response")
+		fmt.Println(response)
+	}
+
+	if response == "y" {
+		return true
+	}
+
+	return false
+}
+
 func Initialize(dir string) {
-	if exists, _ := monitor.Exists(dir); exists {
-		log.Fatal("app has already been initialized")
+	exists, _ := monitor.Exists(dir)
+
+	if exists && !handleExistence() {
 		return
 	}
 
@@ -79,6 +107,7 @@ func Initialize(dir string) {
 	cfg := map[string]Config{
 		"network-monitor": {
 			autoUpdate,
+			"5s",
 			// userEmail,
 			// userPassword,
 			"",
