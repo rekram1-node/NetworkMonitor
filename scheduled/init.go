@@ -2,6 +2,7 @@ package scheduled
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -23,18 +24,12 @@ type autoUpdate struct {
 type Config struct {
 	UpdateConfig  autoUpdate
 	ScanFrequency string
-	// Email         string
-	// Password      string
 	PublishScript string
 }
 
-// func validMailAddress(address string) bool {
-// 	_, err := mail.ParseAddress(address)
-// 	return err == nil
-// }
-
 func prompt(message string) string {
-	log.Print(message)
+	//nolint
+	fmt.Println(message)
 	response, _ := bufio.NewReader(os.Stdin).ReadString('\n')
 	response = strings.ToLower(response)
 	response = strings.TrimSpace(response)
@@ -73,20 +68,6 @@ func Initialize(dir string) {
 		log.Fatal("failed to create configuration file at " + filePath)
 	}
 
-	// var userEmail string = ""
-	// var userPassword string = ""
-
-	// fmt.Println("Please enter an email for alert purposes: ")
-	// fmt.Scanln(&userEmail)
-
-	// for !validMailAddress(userEmail) {
-	// 	fmt.Println("That email was invalid, please enter a valid email address: ")
-	// 	fmt.Scanln(&userEmail)
-	// }
-
-	// fmt.Println("Please enter the password for your email address: ")
-	// fmt.Scanln(&userPassword)
-
 	autoUpdate := autoUpdate{
 		Status:   true,
 		Interval: 5,
@@ -96,9 +77,7 @@ func Initialize(dir string) {
 		"network-monitor": {
 			autoUpdate,
 			"5s",
-			// userEmail,
-			// userPassword,
-			"",
+			`echo "no script to run, please add a script file name in your config file"`,
 		},
 	}
 
