@@ -5,10 +5,10 @@ IOT program that works on any device that can monitor your network, letting you 
 
 ## Installation
 #### Docker
+[Docker Hub repo](https://hub.docker.com/repository/docker/rekram/network-monitor)
 ```shell
 docker run rekram/network-monitor:latest
 ```
-[[Docker Hub repo](https://hub.docker.com/repository/docker/rekram/network-monitor)]
 
 #### Binary Install
 visit our [releases page](https://github.com/rekram1-node/NetworkMonitor/releases)
@@ -20,10 +20,9 @@ this will create a directory called "network-monitor" at root where your outages
 follow prompts and add correct stuff as needed
 
 #### Uploads
-The "config.yaml" file will contain a parameter called "uploadscripts" add the name of your bash/scripting file that will handle your uploads (this file will need to be in the same directory as your configuration file)
-Note: Be sure to chmod (or other equivalent) so that the application can run it
+The "config.yaml" file will contain a parameter called "uploadscripts" add your script and it will be called when you run the app with the "-upload" flag
 
-#### Usage
+## Usage
 All settings for this will be configured on initialization and can be edited in the configuration file during run.
 The app will initialize a new directory: "network-monitor" at root for your OS, and add the file: "config.yaml"
 While initializing you will be walked through a series of prompts to help you have a properly configured app
