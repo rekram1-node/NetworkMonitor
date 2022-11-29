@@ -10,14 +10,20 @@ import (
 
 func ConnectionCheck(dir string, timeLayout string) {
 	data, err := GetConfig(dir)
-	var sleep time.Duration = data.ScanFrequency
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// parses time out from string formats such as "5s" or "5h30m40s"
+	sleepDuration, err := time.ParseDuration(data.ScanFrequency)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	for {
-		time.Sleep(sleep * time.Second)
+		time.Sleep(sleepDuration)
 		online := monitor.ConnectedToInternet()
 
 		if !online {

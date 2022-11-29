@@ -8,7 +8,6 @@ import (
 	"net/mail"
 	"os"
 	"strings"
-	"time"
 
 	"github.com/rekram1-node/NetworkMonitor/monitor"
 	"gopkg.in/yaml.v2"
@@ -25,7 +24,7 @@ type autoUpdate struct {
 
 type Config struct {
 	UpdateConfig  autoUpdate
-	ScanFrequency time.Duration
+	ScanFrequency string
 	// Email         string
 	// Password      string
 	PublishScript string
@@ -108,7 +107,7 @@ func Initialize(dir string) {
 	cfg := map[string]Config{
 		"network-monitor": {
 			autoUpdate,
-			5,
+			"5s",
 			// userEmail,
 			// userPassword,
 			"",
