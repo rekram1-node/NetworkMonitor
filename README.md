@@ -8,6 +8,7 @@ IOT program that works on any device that can monitor your network, letting you 
 ```shell
 docker run rekram/network-monitor:latest
 ```
+[[Docker Hub repo](https://hub.docker.com/repository/docker/rekram/network-monitor)]
 
 #### Binary Install
 visit our [releases page](https://github.com/rekram1-node/NetworkMonitor/releases)
