@@ -25,16 +25,17 @@ func main() {
 	if *init {
 		fmt.Println("initializing application...")
 		scheduled.Initialize(dir)
+		return
 	}
 
 	if *uploadData {
 		fmt.Println("uploading...")
 		err := scheduled.UploadFile(dir)
 		checkErr(err)
-	} else {
-		fmt.Println("checking connection...")
-		scheduled.ConnectionCheck(dir, timeLayout)
+		return
 	}
+	fmt.Println("checking connection...")
+	scheduled.ConnectionCheck(dir, timeLayout)
 }
 
 func checkErr(err error) {

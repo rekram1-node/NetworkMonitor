@@ -3,10 +3,7 @@ package scheduled
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os/exec"
-
-	"gopkg.in/yaml.v2"
 )
 
 type uploadConfig struct {
@@ -32,22 +29,13 @@ func UploadFile(dir string) error {
 }
 
 func (cfg *uploadConfig) checkScript(directory string) error {
-	configFilePath := directory + "/" + ConfigFileName
-	yfile, err := ioutil.ReadFile(configFilePath)
+	data, err := GetConfig(directory)
 
 	if err != nil {
-		return err
+		return errors.New("failed to read configuration file " + err.Error())
 	}
 
-	data := make(map[string]Config)
-
-	err = yaml.Unmarshal(yfile, &data)
-
-	if err != nil {
-		return err
-	}
-
-	uploadScript := data["network-monitor"].PublishScript
+	uploadScript := data.PublishScript
 
 	if uploadScript == "" {
 		return errors.New("no script to run, please add a script file name in your config file")
