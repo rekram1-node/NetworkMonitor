@@ -33,6 +33,14 @@ linters:
   - godot
   fast: false
 
+  gosec:
+    includes:
+      - G401
+      - G306
+      - G101
+    excludes:
+      - G204
+
 run:
     concurrency: 4
     timeout: 5m

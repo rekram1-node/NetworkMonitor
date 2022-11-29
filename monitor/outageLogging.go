@@ -11,7 +11,7 @@ const (
 	OutagesFileName = "outages.csv"
 )
 
-type LogConfig struct {
+type OutageConfig struct {
 	Start          time.Time
 	End            time.Time
 	FormattedStart string
@@ -29,7 +29,7 @@ func Exists(name string) (bool, error) {
 	return false, err
 }
 
-func AppendLog(cfg *LogConfig) error {
+func AppendLog(cfg *OutageConfig) error {
 	writeHeader := false
 	filePath := cfg.Directory + "/" + OutagesFileName
 
@@ -39,12 +39,11 @@ func AppendLog(cfg *LogConfig) error {
 
 	f, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 
-	defer f.Close()
-
 	if err != nil {
 		return err
 	}
 
+	defer f.Close()
 	w := csv.NewWriter(f)
 	defer w.Flush()
 

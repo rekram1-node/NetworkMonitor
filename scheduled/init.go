@@ -2,13 +2,11 @@ package scheduled
 
 import (
 	"bufio"
-	"fmt"
-	"io/ioutil"
 	"log"
-	"net/mail"
 	"os"
 	"strings"
 
+	"github.com/rekram1-node/NetworkMonitor/logger"
 	"github.com/rekram1-node/NetworkMonitor/monitor"
 	"gopkg.in/yaml.v2"
 )
@@ -30,16 +28,13 @@ type Config struct {
 	PublishScript string
 }
 
-func validMailAddress(address string) bool {
-	_, err := mail.ParseAddress(address)
-	if err != nil {
-		return false
-	}
-	return true
-}
+// func validMailAddress(address string) bool {
+// 	_, err := mail.ParseAddress(address)
+// 	return err == nil
+// }
 
 func prompt(message string) string {
-	fmt.Println(message)
+	log.Print(message)
 	response, _ := bufio.NewReader(os.Stdin).ReadString('\n')
 	response = strings.ToLower(response)
 	response = strings.TrimSpace(response)
@@ -47,19 +42,14 @@ func prompt(message string) string {
 }
 
 func handleExistence() bool {
-	var defaultMsg string = "You have already initialized network-monitor do you want to overwrite your current settings? (y/n)"
-	var response string = prompt(defaultMsg)
+	defaultMsg := "You have already initialized network-monitor do you want to overwrite your current settings? (y/n)"
+	response := prompt(defaultMsg)
 
 	for response != "y" && response != "n" {
 		response = prompt(defaultMsg + "\nPlease enter a valid response")
-		fmt.Println(response)
 	}
 
-	if response == "y" {
-		return true
-	}
-
-	return false
+	return response == "y"
 }
 
 func Initialize(dir string) {
@@ -78,8 +68,6 @@ func Initialize(dir string) {
 	filePath := dir + "/" + ConfigFileName
 
 	f, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
-
-	defer f.Close()
 
 	if err != nil {
 		log.Fatal("failed to create configuration file at " + filePath)
@@ -120,11 +108,12 @@ func Initialize(dir string) {
 		log.Fatal("failed to marshal update configuration: " + err.Error())
 	}
 
-	err = ioutil.WriteFile(filePath, data, 0)
+	err = os.WriteFile(filePath, data, 0)
 
 	if err != nil {
 		log.Fatal("failed to write to configuration file: " + err.Error())
 	}
 
-	fmt.Println("successfully initialized network monitor!!!")
+	defer f.Close()
+	logger.Info.Msg("Successfully Initialized Network Monitor!!!")
 }

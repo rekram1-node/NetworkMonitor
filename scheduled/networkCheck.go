@@ -1,10 +1,10 @@
 package scheduled
 
 import (
-	"fmt"
 	"log"
 	"time"
 
+	"github.com/rekram1-node/NetworkMonitor/logger"
 	"github.com/rekram1-node/NetworkMonitor/monitor"
 )
 
@@ -29,16 +29,16 @@ func ConnectionCheck(dir string, timeLayout string) {
 		if !online {
 			startedAt := time.Now()
 			formattedStart := startedAt.Format(timeLayout)
-			fmt.Println("failed at " + formattedStart)
+			logger.Error.Msg("failed at " + formattedStart)
 
 			for !online {
 				online = monitor.ConnectedToInternet()
 			}
 
 			endedAt := time.Now()
-			fmt.Println("recovered at " + endedAt.Format(timeLayout))
+			logger.Recover.Msg("recovered at " + endedAt.Format(timeLayout))
 
-			cfg := monitor.LogConfig{
+			cfg := monitor.OutageConfig{
 				Start:          startedAt,
 				End:            endedAt,
 				FormattedStart: formattedStart,
@@ -51,6 +51,6 @@ func ConnectionCheck(dir string, timeLayout string) {
 				log.Fatal("misconfigured logger")
 			}
 		}
-		fmt.Println("successfully connected")
+		logger.Info.Msg("Successfully Connected")
 	}
 }
