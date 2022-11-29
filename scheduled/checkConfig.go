@@ -1,14 +1,14 @@
 package scheduled
 
 import (
-	"io/ioutil"
+	"os"
 
 	"gopkg.in/yaml.v2"
 )
 
 func GetConfig(dir string) (*Config, error) {
 	configFilePath := dir + "/" + ConfigFileName
-	yfile, err := ioutil.ReadFile(configFilePath)
+	yfile, err := os.ReadFile(configFilePath)
 
 	if err != nil {
 		return nil, err
