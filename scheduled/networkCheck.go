@@ -29,14 +29,14 @@ func ConnectionCheck(dir string, timeLayout string) {
 		if !online {
 			startedAt := time.Now()
 			formattedStart := startedAt.Format(timeLayout)
-			logger.Error.Msg("failed at " + formattedStart)
+			logger.Error.Msg("lost connection")
 
 			for !online {
 				online = monitor.ConnectedToInternet()
 			}
 
 			endedAt := time.Now()
-			logger.Recover.Msg("recovered at " + endedAt.Format(timeLayout))
+			logger.Recover.Msg("recovered connection")
 
 			cfg := monitor.OutageConfig{
 				Start:          startedAt,

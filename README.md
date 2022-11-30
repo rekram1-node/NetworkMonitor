@@ -10,7 +10,7 @@ Low dependency solution (currently in progress)
 
 Set up once and done, or turn off auto-updating in the [configuration](#configuration)
 
-Insert Pretty Console Image Here
+![Pretty Logging Image](pretty.png)
 
 ## Features
 
