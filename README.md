@@ -1,6 +1,7 @@
 # NetworkMonitor
 
-[![Go Report](https://goreportcard.com/badge/github.com/rekram1-node/NetworkMonitor)](https://goreportcard.com/report/github.com/rekram1-node/NetworkMonitor) [![license](http://img.shields.io/badge/license-MIT-red.svg?style=flat)](https://raw.githubusercontent.com/rekram1-node/NetworkMonitor/main/LICENSE) 
+[![Go Report](https://goreportcard.com/badge/github.com/rekram1-node/NetworkMonitor)](https://goreportcard.com/report/github.com/rekram1-node/NetworkMonitor) [![license](http://img.shields.io/badge/license-MIT-red.svg?style=flat)](https://raw.githubusercontent.com/rekram1-node/NetworkMonitor/main/LICENSE) ![Build Status](https://github.com/rekram1-node/NetworkMonitor/actions/workflows/main.yml/badge.svg)
+
 
 Simple Network Monitoring program, runs on any device, provides extensive customizability
 
