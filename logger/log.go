@@ -18,8 +18,8 @@ var (
 	white         = "\033[97m"
 	errPrefix     = red + "ERROR:\t"
 	warnPrefix    = yellow + "WARN:\t"
-	infoPrefix    = white + "INFO:\t" + reset
-	recoverPrefix = green + "RECOVERED:\t" + reset
+	infoPrefix    = white + "INFO:\t"
+	recoverPrefix = green + "RECOVERED:\t"
 )
 
 type NetworkLog struct {
