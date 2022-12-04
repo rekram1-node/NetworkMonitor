@@ -62,8 +62,8 @@ func CleanLogs(dir string) {
 		}
 	}
 
-	defer w.Flush()
 	if err = os.Rename(tempPath, filePath); err != nil {
 		log.Fatal("could not rename file")
 	}
+	defer w.Flush()
 }
