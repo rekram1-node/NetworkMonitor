@@ -9,6 +9,7 @@ import (
 
 const (
 	OutagesFileName = "outages.csv"
+	TimeLayout      = "2006-01-02 3:04:05 PM"
 )
 
 type OutageConfig struct {
