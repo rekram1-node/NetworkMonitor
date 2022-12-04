@@ -63,7 +63,7 @@ func CleanLogs(dir string) {
 	}
 
 	defer w.Flush()
-
-	os.Remove(filePath)
-	os.Rename(tempPath, filePath)
+	if err = os.Rename(tempPath, filePath); err != nil {
+		log.Fatal("could not rename file")
+	}
 }
