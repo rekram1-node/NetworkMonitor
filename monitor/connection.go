@@ -1,7 +1,9 @@
 package monitor
 
 import (
-	"math/rand"
+	"crypto/rand"
+	"log"
+	"math/big"
 	"net"
 	"strconv"
 	"sync"
@@ -11,8 +13,8 @@ import (
 func ConnectedToInternet() bool {
 	valid := 0
 	sites := randomSites()
-
 	var wg = &sync.WaitGroup{}
+
 	for _, siteName := range sites {
 		wg.Add(1)
 
@@ -24,16 +26,12 @@ func ConnectedToInternet() bool {
 				valid++
 				defer conn.Close()
 			}
+
 			wg.Done()
 		}(siteName)
 	}
 	wg.Wait()
-
-	if valid > 0 {
-		return true
-	}
-
-	return false
+	return valid > 0
 }
 
 func contains(slice []int, numberToCheck int) bool {
@@ -69,11 +67,17 @@ func randomSites() []string {
 
 	// Select 3 random sites
 	for i := 0; i < 3; i++ {
-		rand.Seed(time.Now().UnixNano())
-		randomIndex := rand.Intn(len(siteArray))
+		num, err := rand.Int(rand.Reader, big.NewInt(int64(len(siteArray))))
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		randomIndex := int(num.Int64())
 
 		for contains(indexes, randomIndex) {
-			randomIndex = rand.Intn(len(siteArray))
+			num, _ = rand.Int(rand.Reader, big.NewInt(int64(len(siteArray))))
+			randomIndex = int(num.Int64())
 		}
 
 		site := siteArray[randomIndex]

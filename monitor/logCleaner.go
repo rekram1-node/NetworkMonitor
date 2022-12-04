@@ -1,19 +1,21 @@
 package monitor
 
 import (
-	"fmt"
+	"encoding/csv"
 	"log"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/rekram1-node/NetworkMonitor/logger"
 )
 
 func CleanLogs(dir string) {
-
-	fmt.Println("Start Cleaning.")
+	logger.Info.Msg("Start Cleaning...")
 	filePath := dir + "/" + OutagesFileName
 
 	f, err := os.ReadFile(filePath)
+
 	if err != nil {
 		log.Fatal("Could not open log", err)
 	}
@@ -23,29 +25,45 @@ func CleanLogs(dir string) {
 	// Create Temp File
 	templog, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
-		log.Fatal("could not create templog", err)
+		log.Fatal("could not create templog ", err)
 	}
+
+	if err := templog.Close(); err != nil {
+		log.Fatal(err)
+	}
+
+	w := csv.NewWriter(templog)
 
 	lines := strings.Split(string(f), "\n")
 
 	for i, l := range lines {
+		if l == "" {
+			continue
+		}
+
 		if i == 0 {
-			templog.WriteString(l)
+			w.Write([]string{
+				"Time",
+				"Duration",
+			})
+
 			continue
 		} else {
-			currLine := strings.Split(l, " ")
-			lineTime, err := time.Parse(time.Layout, currLine[0])
+			currLine := strings.Split(l, ",")
+			lineTime, err := time.Parse(TimeLayout, currLine[0])
+
 			if err != nil {
-				log.Fatal("could not read time from log", err)
+				log.Fatal("could not read time from log ", err)
 			}
 
 			if time.Since(lineTime).Hours() < 720 {
-				templog.WriteString(l)
+				w.Write(currLine)
 			}
 		}
 	}
 
+	defer w.Flush()
+
 	os.Remove(filePath)
 	os.Rename(tempPath, filePath)
-
 }

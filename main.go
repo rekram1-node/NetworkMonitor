@@ -1,10 +1,12 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"os"
 
-	"github.com/rekram1-node/NetworkMonitor/monitor"
+	"github.com/rekram1-node/NetworkMonitor/logger"
+	"github.com/rekram1-node/NetworkMonitor/scheduled"
 )
 
 const (
@@ -14,33 +16,25 @@ const (
 func main() {
 	home, _ := os.UserHomeDir()
 	dir := home + "/network-monitoring"
+	init := flag.Bool("init", false, "initialize scripts")
+	uploadData := flag.Bool("upload", false, "upload file")
+	flag.Parse()
 
-	monitor.CleanLogs(dir)
+	if *init {
+		logger.Info.Msg("Initializing Application...")
+		scheduled.Initialize(dir)
+		return
+	}
+
+	if *uploadData {
+		logger.Info.Msg("Uploading...")
+		err := scheduled.UploadFile(dir)
+		checkErr(err)
+		return
+	}
+	logger.Info.Msg("Checking Connection...")
+	scheduled.ConnectionCheck(dir, timeLayout)
 }
-
-// func main() {
-// 	home, _ := os.UserHomeDir()
-// 	dir := home + "/network-monitoring"
-
-// 	init := flag.Bool("init", false, "initialize scripts")
-// 	uploadData := flag.Bool("upload", false, "upload file")
-
-// 	flag.Parse()
-
-// 	if *init {
-// 		fmt.Println("initializing application...")
-// 		scheduled.Initialize(dir)
-// 	}
-
-// 	if *uploadData {
-// 		fmt.Println("uploading...")
-// 		err := scheduled.UploadFile(dir)
-// 		checkErr(err)
-// 	} else {
-// 		fmt.Println("checking connection...")
-// 		scheduled.ConnectionCheck(dir, timeLayout)
-// 	}
-// }
 
 func checkErr(err error) {
 	if err != nil {

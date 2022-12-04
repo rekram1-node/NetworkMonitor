@@ -1,12 +1,13 @@
 package scheduled
 
 import (
+	"bufio"
 	"fmt"
-	"io/ioutil"
 	"log"
-	"net/mail"
 	"os"
+	"strings"
 
+	"github.com/rekram1-node/NetworkMonitor/logger"
 	"github.com/rekram1-node/NetworkMonitor/monitor"
 	"gopkg.in/yaml.v2"
 )
@@ -21,23 +22,35 @@ type autoUpdate struct {
 }
 
 type Config struct {
-	UpdateConfig autoUpdate
-	// Email         string
-	// Password      string
+	UpdateConfig  autoUpdate
+	ScanFrequency string
 	PublishScript string
 }
 
-func validMailAddress(address string) bool {
-	_, err := mail.ParseAddress(address)
-	if err != nil {
-		return false
+func prompt(message string) string {
+	//nolint
+	fmt.Println(message)
+	response, _ := bufio.NewReader(os.Stdin).ReadString('\n')
+	response = strings.ToLower(response)
+	response = strings.TrimSpace(response)
+	return response
+}
+
+func handleExistence() bool {
+	defaultMsg := "You have already initialized network-monitor do you want to overwrite your current settings? (y/n)"
+	response := prompt(defaultMsg)
+
+	for response != "y" && response != "n" {
+		response = prompt(defaultMsg + "\nPlease enter a valid response")
 	}
-	return true
+
+	return response == "y"
 }
 
 func Initialize(dir string) {
-	if exists, _ := monitor.Exists(dir); exists {
-		log.Fatal("app has already been initialized")
+	exists, _ := monitor.Exists(dir)
+
+	if exists && !handleExistence() {
 		return
 	}
 
@@ -51,25 +64,9 @@ func Initialize(dir string) {
 
 	f, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 
-	defer f.Close()
-
 	if err != nil {
 		log.Fatal("failed to create configuration file at " + filePath)
 	}
-
-	// var userEmail string = ""
-	// var userPassword string = ""
-
-	// fmt.Println("Please enter an email for alert purposes: ")
-	// fmt.Scanln(&userEmail)
-
-	// for !validMailAddress(userEmail) {
-	// 	fmt.Println("That email was invalid, please enter a valid email address: ")
-	// 	fmt.Scanln(&userEmail)
-	// }
-
-	// fmt.Println("Please enter the password for your email address: ")
-	// fmt.Scanln(&userPassword)
 
 	autoUpdate := autoUpdate{
 		Status:   true,
@@ -79,9 +76,8 @@ func Initialize(dir string) {
 	cfg := map[string]Config{
 		"network-monitor": {
 			autoUpdate,
-			// userEmail,
-			// userPassword,
-			"",
+			"5s",
+			`echo "no script to run, please add a script file name in your config file"`,
 		},
 	}
 
@@ -91,11 +87,12 @@ func Initialize(dir string) {
 		log.Fatal("failed to marshal update configuration: " + err.Error())
 	}
 
-	err = ioutil.WriteFile(filePath, data, 0)
+	err = os.WriteFile(filePath, data, 0)
 
 	if err != nil {
 		log.Fatal("failed to write to configuration file: " + err.Error())
 	}
 
-	fmt.Println("successfully initialized network monitor!!!")
+	defer f.Close()
+	logger.Info.Msg("Successfully Initialized Network Monitor!!!")
 }
