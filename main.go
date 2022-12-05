@@ -18,12 +18,10 @@ var (
 )
 
 func main() {
-	home, _ := os.UserHomeDir()
-
-	if home == "/" {
-		dir = "/network-monitoring"
-	} else {
+	if home, _ := os.UserHomeDir(); home != "/" {
 		dir = home + "/network-monitoring"
+	} else {
+		dir = "network-monitoring"
 	}
 
 	init := flag.Bool("init", false, "initialize scripts")
