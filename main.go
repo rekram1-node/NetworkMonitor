@@ -13,9 +13,19 @@ const (
 	timeLayout = "2006-01-02 3:04:05 PM"
 )
 
+var (
+	dir = ""
+)
+
 func main() {
 	home, _ := os.UserHomeDir()
-	dir := home + "/network-monitoring"
+
+	if home == "/" {
+		dir = "/network-monitoring"
+	} else {
+		dir = home + "/network-monitoring"
+	}
+
 	init := flag.Bool("init", false, "initialize scripts")
 	uploadData := flag.Bool("upload", false, "upload file")
 	flag.Parse()
