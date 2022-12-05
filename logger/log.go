@@ -27,6 +27,7 @@ var (
 	warnPrefix    = yellow + "WARN:\t"
 	infoPrefix    = white + "INFO:\t"
 	recoverPrefix = green + "RECOVERED:\t"
+	// format        = ""
 )
 
 type NetworkLog struct {
@@ -51,32 +52,31 @@ func init() {
 		white = ""
 	}
 
-	format := time.Now().UTC().Format(timeLayout) + " : "
-
 	Info = &NetworkLog{
-		log: log.New(os.Stdout, infoPrefix+format, 0),
+		log: log.New(os.Stdout, infoPrefix, 0),
 	}
 	Recover = &NetworkLog{
-		log: log.New(os.Stdout, recoverPrefix+format, 0),
+		log: log.New(os.Stdout, recoverPrefix, 0),
 	}
 	Warn = &NetworkLog{
-		log: log.New(os.Stdout, warnPrefix+format, 0),
+		log: log.New(os.Stdout, warnPrefix, 0),
 	}
 	Error = &NetworkLog{
-		log: log.New(os.Stdout, errPrefix+format, 0),
+		log: log.New(os.Stdout, errPrefix, 0),
 	}
 }
 
 func (l *NetworkLog) Msg(message string) {
+	format := time.Now().Format(timeLayout) + " : "
 	prefix := l.log.Prefix()
 	switch {
 	case strings.Contains(prefix, errPrefix):
-		l.log.Println(red + message + reset)
+		l.log.Println(red + format + message + reset)
 	case strings.Contains(prefix, warnPrefix):
-		l.log.Println(yellow + message + reset)
+		l.log.Println(yellow + format + message + reset)
 	case strings.Contains(prefix, recoverPrefix):
-		l.log.Println(green + message + reset)
+		l.log.Println(green + format + message + reset)
 	default:
-		l.log.Println(white + message + reset)
+		l.log.Println(white + format + message + reset)
 	}
 }

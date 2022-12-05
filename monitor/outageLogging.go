@@ -29,7 +29,7 @@ func Exists(name string) (bool, error) {
 	return false, err
 }
 
-func AppendLog(cfg *OutageConfig) error {
+func (cfg *OutageConfig) AppendLog() error {
 	writeHeader := false
 	filePath := cfg.Directory + "/" + OutagesFileName
 

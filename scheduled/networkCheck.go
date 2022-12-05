@@ -45,7 +45,7 @@ func ConnectionCheck(dir string, timeLayout string) {
 				Directory:      dir,
 			}
 
-			err := monitor.AppendLog(&cfg)
+			err := cfg.AppendLog()
 
 			if err != nil {
 				log.Fatal("misconfigured logger")
