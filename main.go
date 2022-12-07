@@ -2,8 +2,10 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
+	"os/exec"
 
 	"github.com/rekram1-node/NetworkMonitor/logger"
 	"github.com/rekram1-node/NetworkMonitor/scheduled"
@@ -41,7 +43,11 @@ func main() {
 		return
 	}
 	logger.Info.Msg("Checking Connection...")
-	scheduled.ConnectionCheck(dir, timeLayout)
+	cmd, _ := exec.Command("ls").Output()
+	fmt.Println(string(cmd))
+	cmd, _ = exec.Command("pwd").Output()
+	fmt.Println(string(cmd))
+	// scheduled.ConnectionCheck(dir, timeLayout)
 }
 
 func checkErr(err error) {
