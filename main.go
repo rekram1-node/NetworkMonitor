@@ -45,6 +45,7 @@ func main() {
 	logger.Info.Msg("Checking Connection...")
 	cmd, _ := exec.Command("ls").Output()
 	fmt.Println(string(cmd))
+	fmt.Println()
 	cmd, _ = exec.Command("pwd").Output()
 	fmt.Println(string(cmd))
 	// scheduled.ConnectionCheck(dir, timeLayout)
