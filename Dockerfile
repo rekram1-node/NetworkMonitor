@@ -1,8 +1,4 @@
-FROM busybox AS build-env
+FROM alpine:3.8
 RUN mkdir /network-monitor
 
-FROM scratch
-COPY --from=build-env /network-monitor /network-monitor
-
-COPY networkmonitor /
-ENTRYPOINT ["/networkmonitor"]
+# copy goreleaser docker container into this one
