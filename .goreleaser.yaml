@@ -41,7 +41,7 @@ dockers:
         - "docker.io/rekram/network-monitor:v{{ .Major }}.{{ .Minor }}-arm64v8"
       goos: linux
       goarch: arm64
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.goreleaser
       use: buildx
       build_flag_templates:
         - "--platform=linux/arm64/v8"
@@ -50,7 +50,7 @@ dockers:
       - "docker.io/rekram/network-monitor:latest-amd64"
       - "docker.io/rekram/network-monitor:v{{ .Major }}-amd64"
       - "docker.io/rekram/network-monitor:v{{ .Major }}.{{ .Minor }}-amd64"
-    dockerfile: Dockerfile
+    dockerfile: Dockerfile.goreleaser
     use: buildx
     build_flag_templates:
       - "--platform=linux/amd64"
